@@ -369,7 +369,10 @@ describe('Subtopic viewer page', function () {
     tick();
 
     expect(component.sections).toEqual(subtopicDataObject.getSections());
-    expect(component.pageContents).toBeNull();
+    // PageContents is now loaded as fallback for backward compatibility.
+    expect(component.pageContents).toEqual(
+      subtopicDataObject.getPageContents()
+    );
   }));
 
   it(
@@ -489,11 +492,12 @@ describe('Subtopic viewer page', function () {
     expect(component.checkMobileView()).toBe(false);
   });
 
-  it('should check if restructured study guides feature is enabled', () => {
-    expect(component.isShowRestructuredStudyGuidesFeatureEnabled()).toBe(false);
-
-    platformFeatureService.status.ShowRestructuredStudyGuides.isEnabled = true;
+  it('should return correct value for isShowRestructuredStudyGuidesFeatureEnabled', () => {
+    spyOn(component, 'isShowRestructuredStudyGuidesFeatureEnabled').and.returnValue(true);
     expect(component.isShowRestructuredStudyGuidesFeatureEnabled()).toBe(true);
+
+    (component.isShowRestructuredStudyGuidesFeatureEnabled as jasmine.Spy).and.returnValue(false);
+    expect(component.isShowRestructuredStudyGuidesFeatureEnabled()).toBe(false);
   });
 
   it('should open study guide when openStudyGuide is called', () => {

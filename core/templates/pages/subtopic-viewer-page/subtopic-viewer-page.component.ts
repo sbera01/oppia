@@ -71,7 +71,6 @@ export class SubtopicViewerPageComponent implements OnInit, OnDestroy {
   prevSubtopic!: Subtopic;
   directiveSubscriptions = new Subscription();
   subtopicSummaryIsShown: boolean = false;
-  isPracticeTabDisplayed: boolean = false;
   currentSubtopicId!: number;
 
   constructor(
@@ -146,6 +145,8 @@ export class SubtopicViewerPageComponent implements OnInit, OnDestroy {
       ([subtopicDataObject, topicDataObject]) => {
         if (this.isShowRestructuredStudyGuidesFeatureEnabled()) {
           this.sections = subtopicDataObject.getSections();
+          // Load pageContents as fallback for subtopics that haven't been migrated yet
+          this.pageContents = subtopicDataObject.getPageContents();
         } else {
           this.pageContents = subtopicDataObject.getPageContents();
         }
@@ -191,8 +192,6 @@ export class SubtopicViewerPageComponent implements OnInit, OnDestroy {
             topicDataObject.getTopicId(),
             TranslationKeyType.TITLE
           );
-        this.isPracticeTabDisplayed =
-          topicDataObject.getPracticeTabIsDisplayed();
 
         this.loaderService.hideLoadingScreen();
       },

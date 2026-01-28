@@ -37,6 +37,7 @@
   <p *ngIf="isHackySubtopicTitleTranslationDisplayed()" class="content-title">{{ subtopicTitleTranslationKey | translate }}</p>
   <div class="content-box">
     <div class="content">
+      <!-- Display Study Guide Sections if available -->
       <div class="card" *ngFor="let section of sections">
         <div class="card-header">
           <h3 class="card-title">{{ section.heading.unicode }}</h3>
@@ -46,7 +47,12 @@
           </oppia-rte-output-display>
         </div>
       </div>
-      <button *ngIf="isPracticeTabDisplayed" (click)="openPracticeMenu($event)" class="btn btn-next-actions e2e-test-go-to-practice-section-button btn-practice-section">
+      <!-- Fallback to old pageContents if sections not available -->
+      <div *ngIf="!sections || sections.length === 0">
+        <oppia-rte-output-display *ngIf="pageContents" [rteString]="pageContents.getHtml()">
+        </oppia-rte-output-display>
+      </div>
+      <button (click)="openPracticeMenu($event)" class="btn btn-next-actions e2e-test-go-to-practice-section-button btn-practice-section">
         <img [src]="getStaticImageUrl('/icons/practice-button-edit.png')" alt="Practice button icon" width="15px" height="15px" class="practice-section-icon">
         <p class="text-practice-section-fixed">
           {{ 'I18N_SUBTOPIC_VIEWER_GO_TO_PRACTICE' | translate }} {{ subtopicTitle }}
