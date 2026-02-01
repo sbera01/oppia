@@ -38,6 +38,7 @@ export interface ContributorCertificateInfo {
   from_date: string;
   to_date: string;
   contribution_hours: number;
+  contribution_words: number;
   team_lead: string;
   language: string | null;
 }

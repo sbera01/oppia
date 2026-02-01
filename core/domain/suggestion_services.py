@@ -4465,7 +4465,8 @@ def _generate_translation_contributor_certificate_data(
             words_without_empty_strings = [word for word in words if word != '']
             words_count += len(words_without_empty_strings)
     # Go to the below link for more information about how we count hours
-    # contributed.# Goto the below link for more information.
+    # contributed. The hours calculation is kept for backward compatibility,
+    # but certificates now display word count for translations.
     # https://docs.google.com/spreadsheets/d/1ykSNwPLZ5qTCkuO21VLdtm_2SjJ5QJ0z0PlVjjSB4ZQ/edit?usp=sharing
     hours_contributed = round(words_count / 300, 2)
 
@@ -4477,6 +4478,7 @@ def _generate_translation_contributor_certificate_data(
         to_date.strftime('%d %b %Y'),
         signature,
         str(hours_contributed),
+        words_count,
         language_description,
     )
 
@@ -4542,5 +4544,6 @@ def _generate_question_contributor_certificate_data(
         to_date.strftime('%d %b %Y'),
         signature,
         str(hours_contributed),
+        0,
         None,
     )

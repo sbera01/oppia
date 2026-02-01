@@ -202,6 +202,7 @@ export class CertificateDownloadModalComponent {
       linePosition += 100;
 
       if (this.suggestionType === 'translate_content') {
+        const formattedWordCount = info.contribution_words.toLocaleString();
         const certificateContentData: CertificateContentData[] = [
           {
             text:
@@ -222,15 +223,14 @@ export class CertificateDownloadModalComponent {
             text:
               'This certificate confirms that ' +
               this.username +
-              ' has contributed ' +
-              info.contribution_hours +
-              ' hours ' +
-              'worth of',
+              ' has translated ' +
+              formattedWordCount +
+              ' words',
             linePosition: (linePosition += 80),
           },
           {
             text:
-              'translations from ' +
+              'from ' +
               info.from_date +
               ' to ' +
               info.to_date +
